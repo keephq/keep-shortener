@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "keep-shortener"
+version = "0.1.0"
+description = "URL shortener for Keep alerts used to monitor alert fatigue"
+authors = ["Paladin Data Inc."]
+license = "AGPL"
+readme = "README.md"
+packages = [{include = "keep_shortener"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.89.1"
+google-cloud-datastore = "^2.13.2"
+uvicorn = "^0.20.0"
+validators = "^0.20.0"
+gunicorn = "^20.1.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = {version = "^23.1.0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
