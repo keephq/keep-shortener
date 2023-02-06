@@ -24,5 +24,5 @@ COPY app/ /code/
 
 EXPOSE 8080
 
-ENTRYPOINT [ "gunicorn", "app.main:app", "--workers", "2", "--worker-class", \
+ENTRYPOINT [ "gunicorn", "main:app", "--workers", "2", "--worker-class", \
         "uvicorn.workers.UvicornWorker",  "-b", "0.0.0.0:8080" ]
