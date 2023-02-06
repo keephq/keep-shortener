@@ -69,7 +69,7 @@ def create_short_url(
         if existing_entity:
             shortened_urls[
                 url
-            ] = f"{keep_api_url}/{customer.unique_identifier}/{entity[0].key.name}"
+            ] = f"{keep_api_url}/{customer.unique_identifier}/{existing_entity[0].key.name}"
             continue
 
         # generate a random string which will be the short url
