@@ -20,9 +20,9 @@ COPY poetry.lock pyproject.toml /code/
 RUN POETRY_VIRTUALENVS_CREATE=false poetry install --only main --no-interaction --no-ansi --no-root
 
 # Copy project.
-COPY app/ /code/
+COPY . /code/
 
 EXPOSE 8080
 
-ENTRYPOINT [ "gunicorn", "main:app", "--workers", "2", "--worker-class", \
+ENTRYPOINT [ "gunicorn", "app.main:app", "--workers", "2", "--worker-class", \
         "uvicorn.workers.UvicornWorker",  "-b", "0.0.0.0:8080" ]
