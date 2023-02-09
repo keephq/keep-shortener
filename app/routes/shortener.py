@@ -4,7 +4,7 @@ import random
 from google.cloud import datastore
 from validators import url as url_validator
 from fastapi.responses import RedirectResponse
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 
 from app.core.config import config
 from app.core.dependencies import get_datastore_client
@@ -22,6 +22,7 @@ router = APIRouter()
 def redirect_to_original_url(
     customer_unique_identifier: str,
     short_url_identifier: str,
+    request: Request,
     datastore_client: datastore.Client = Depends(get_datastore_client),
 ):
     # get the original url from datastore
@@ -34,6 +35,7 @@ def redirect_to_original_url(
 
     # increment the clicks
     item["clicks"] += 1
+    item["visitors"] += dict(request.headers.items())
     datastore_client.put(item)
 
     return RedirectResponse(url=item["original_url"])
@@ -86,6 +88,7 @@ def create_short_url(
         entity = datastore.Entity(key=key)
         entity["original_url"] = url
         entity["clicks"] = 0
+        entity["visitors"] = []
         datastore_client.put(entity)
 
         shortened_urls[
